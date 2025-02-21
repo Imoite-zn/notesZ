@@ -1,5 +1,3 @@
-// ignore_for_file: non_constant_identifier_names
-
 import 'package:flutter/material.dart';
 import 'package:to_do_app/themes/themes.dart';
 
@@ -8,7 +6,7 @@ class ThemeProvider with ChangeNotifier{
   ThemeData _themeData = lightMode;
 
   //getter method to access the theme from other sections
-  ThemeData get ThemeData => _themeData;
+  ThemeData get themeData => _themeData;
 
   //getter method to see if we are in dark mode or not
   bool get isDarkMode => _themeData == darkMode;
@@ -21,6 +19,11 @@ class ThemeProvider with ChangeNotifier{
 
   //use this toggle switch
   void toggleTheme() {
-    _themeData = _themeData == darkMode ? lightMode : darkMode;
+    if (_themeData == lightMode) {
+      themeData = darkMode;
+    } else {
+      themeData = lightMode;
+    }
   }
 }
+

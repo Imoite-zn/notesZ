@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:to_do_app/components/my_drawer.dart';
+import 'package:to_do_app/components/note_tile.dart';
 import 'package:to_do_app/models/note.dart';
 import 'package:to_do_app/models/note_database.dart';
 
@@ -118,6 +119,7 @@ class _NotesPageState extends State<NotesPage> {
           ),
         backgroundColor: Theme.of(context).colorScheme.surface,
         floatingActionButton: FloatingActionButton(
+          backgroundColor: Theme.of(context).colorScheme.inversePrimary,
           onPressed: createNote,
           child: Icon(Icons.add),
           ),
@@ -137,40 +139,23 @@ class _NotesPageState extends State<NotesPage> {
                    ),
               ),
             ),
-            ListView.builder(
-              itemCount: currentNotes.length,
-              itemBuilder: (context, index) {
-            
-                  //get individual note
-                  final note = currentNotes[index];
-            
-                  //list tile UI
-                  return ListTile(
-                    title: Text(note.text),
-                    trailing: Row(
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        //edit button
-                        IconButton(
-                          icon: Icon(Icons.edit),
-                          onPressed: () {
-                            //edit note 
-                            updateNote(note);
-                            },
-                            ),
-                        //delete button
-                        IconButton(
-                          icon: Icon(Icons.delete),
-                          onPressed: () {
-                            //edit note 
-                            deleteNote(note.id);
-                            },
-                            ),
-                      ],
-                    ),
-                  );
-              }
-              ),
+            Expanded(
+              child: ListView.builder(
+                itemCount: currentNotes.length,
+                itemBuilder: (context, index) {
+              
+                    //get individual note
+                    final note = currentNotes[index];
+              
+                    //list tile UI
+                    return NoteTile(
+                      text: note.text, 
+                      updateNotePressed: ()=>updateNote(note), 
+                      deleteNotePressed: ()=>deleteNote(note.id),
+                    );
+                }
+                ),
+            ),
           ],
         ),
     );
